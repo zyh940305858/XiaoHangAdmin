@@ -59,10 +59,26 @@ export const constantRoutes = [
   { path: '*', redirect: '/404', hidden: true }
 ]
 
+export const asyncRoutes = [
+  {
+    path: '/users',
+    component: Layout,
+    redirect: '/users/list',
+    children: [
+      {
+        path: 'list',
+        name: 'List',
+        component: () => import('@/views/users/index'),
+        meta: { title: '用户列表', icon: 'table' }
+      }
+    ]
+  }
+]
+
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
+  routes: constantRoutes.concat(asyncRoutes)
 })
 
 const router = createRouter()
